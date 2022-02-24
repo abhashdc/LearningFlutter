@@ -1,159 +1,82 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(CreateButton());
+void main() => runApp(CustomWidget());
 
-class CreateButton extends StatelessWidget {
+class CustomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Practice Buttons'),
+          title: Text('List'),
         ),
-        body: Column(
-          children: <Widget>[
-            PracticeTextButton(
-              buttonText: 'Simple button',
+        body: CustomListView(),
+      ),
+    );
+  }
+}
+
+class DummyProgram extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 50,
+            color: Colors.amber[600],
+            child: const Center(
+              child: Text('Entry A'),
             ),
-            PracticeElevatedButton(
-              buttonText: 'Elevated Button',
+          ),
+          Container(
+            height: 50,
+            color: Colors.amber[500],
+            child: const Center(
+              child: Text('Entry B'),
             ),
-            PracticeFloatingActionButton(),
-            PracticeIconButton(),
-            PracticeOutlinedButton(
-              buttonText: 'Outlined Button',
+          ),
+          Container(
+            height: 50,
+            color: Colors.amber[100],
+            child: const Center(
+              child: Text('Entry C'),
             ),
-            PracticeDropdownButton(),
-            PracticePopupMenuButton(),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      // scrollDirection: Axis.horizontal, //set the list as a row
+      //reverse: true, //Shows bottom to up
+      //addAutomaticKeepAlives: false, //To enable garbage control
+      padding: const EdgeInsets.all(8),
+      children: <Widget>[
+        Container(
+          height: 500,
+          // width: 1000,
+          color: Colors.amber[600],
+          child: const Center(child: Text('Entry A')),
         ),
-        // floatingActionButton: PracticeFloatingActionButton(),
-      ),
-    );
-  }
-}
-
-class PracticeTextButton extends StatelessWidget {
-  String buttonText;
-  PracticeTextButton({this.buttonText = 'Text Button'});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(
-        style: TextButton.styleFrom(
-          textStyle: const TextStyle(fontSize: 20),
+        Container(
+          height: 500,
+          color: Colors.amber[500],
+          child: const Center(child: Text('Entry B')),
         ),
-        onPressed: () {},
-        child: Text(buttonText),
-      ),
+        Container(
+          height: 500,
+          color: Colors.amber[100],
+          child: const Center(child: Text('Entry C')),
+        ),
+      ],
     );
   }
 }
-
-class PracticeDropdownButton extends StatefulWidget {
-  @override
-  State<PracticeDropdownButton> createState() => _PracticeDropdownButtonState();
-}
-
-class _PracticeDropdownButtonState extends State<PracticeDropdownButton> {
-  String dropdownValue = 'One';
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String? newValue) {
-        setState(() {
-          dropdownValue = newValue!;
-        });
-      },
-      items: <String>['One', 'Two', 'Free', 'Four']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    ));
-  }
-}
-
-class PracticeElevatedButton extends StatelessWidget {
-  String buttonText;
-  PracticeElevatedButton({this.buttonText = 'ElevatedButton'});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        onPressed: () {},
-        child: Text(buttonText),
-      ),
-    );
-  }
-}
-
-class PracticeFloatingActionButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        backgroundColor: Colors.red,
-        child: const Icon(Icons.navigation),
-      ),
-    );
-  }
-}
-
-class PracticeIconButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: IconButton(
-        icon: const Icon(Icons.volume_up),
-        onPressed: () {},
-      ),
-    );
-  }
-}
-
-class PracticeOutlinedButton extends StatelessWidget {
-  String buttonText;
-  PracticeOutlinedButton({this.buttonText = 'OutlinedButton'});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: OutlinedButton(
-        onPressed: () {},
-        child: Text(buttonText),
-      ),
-    );
-  }
-}
-
-class PracticePopupMenuButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: PopupMenuButton(
-            itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: Text("First"),
-                    value: 1,
-                  ),
-                  PopupMenuItem(
-                    child: Text("Second"),
-                    value: 2,
-                  )
-                ]));
-  }
-}
+//scrollDirection: Axis.horizontal
