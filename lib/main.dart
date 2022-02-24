@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'bottom_navigation.dart';
+import 'post.dart';
 
 void main() => runApp(Instagram());
 
@@ -7,7 +9,7 @@ class Instagram extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Instagram',
+      title: '  Instagram',
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -19,14 +21,13 @@ class Instagram extends StatelessWidget {
                 Container(
                   child: Text(
                     'Instagram',
-                    style: TextStyle(fontSize: 25),
+                    style: TextStyle(fontSize: 30, fontFamily: 'Billabong'),
                   ),
                 ),
                 Row(
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(top: 5),
-                      // decoration: BoxDecoration(color: Colors.green),
                       child: IconButton(
                         icon: Icon(Icons.favorite_border),
                         iconSize: 25,
@@ -36,7 +37,6 @@ class Instagram extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.only(left: 20, top: 10),
-                      // decoration: BoxDecoration(color: Colors.red),
                       child: Icon(
                         Icons.chat_outlined,
                         color: Colors.black,
@@ -49,77 +49,32 @@ class Instagram extends StatelessWidget {
             ),
           ),
         ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.account_circle_rounded,
-                      color: Colors.amber,
-                      size: 26.0,
-                    ),
-                    Text('abhash'),
-                    Container(
-                      child: Icon(
-                        Icons.more_vert,
-                        color: Colors.black,
-                        size: 26.0,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false, //Disable showing labels
-          showUnselectedLabels: false, //Disable showing labels
-          items: [
-            BottomNavigationBarItem(
-              label: 'Home',
-              icon: Icon(
-                Icons.home,
-                color: Colors.black,
-              ),
-              backgroundColor: Colors.white,
+        body: ListView(
+          padding: const EdgeInsets.all(8),
+          children: <Widget>[
+            CustomPost(
+              userName: 'rajesh',
+              caption: 'Rajesh Jiraya in Mobile Legends',
+              photo: 'meme.jpg',
             ),
-            BottomNavigationBarItem(
-              label: 'Search',
-              icon: Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-              backgroundColor: Colors.white,
+            CustomPost(
+              userName: 'abhash',
+              caption: 'Black clover is back!',
+              photo: 'black.jpg',
             ),
-            BottomNavigationBarItem(
-              label: 'Add',
-              icon: Icon(
-                Icons.add_box_outlined,
-                color: Colors.black,
-              ),
-              backgroundColor: Colors.white,
+            CustomPost(
+              userName: 'watchtower',
+              caption: 'Check out this beautiful wallpaper',
+              photo: 'wallpaper.jpg',
             ),
-            BottomNavigationBarItem(
-              label: 'Shop',
-              icon: Icon(
-                Icons.local_mall_outlined,
-                color: Colors.black,
-              ),
-              backgroundColor: Colors.white,
+            CustomPost(
+              userName: 'suman',
+              caption: 'I love flutter renta',
+              photo: 'flutter.jpg',
             ),
-            BottomNavigationBarItem(
-              label: 'Profile',
-              icon: Icon(
-                Icons.account_circle,
-                color: Colors.black,
-              ),
-              backgroundColor: Colors.white,
-            )
           ],
         ),
+        bottomNavigationBar: CustomBottomNavigation(),
       ),
     );
   }
