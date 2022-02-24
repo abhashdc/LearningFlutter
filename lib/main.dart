@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'bottom_navigation.dart';
 import 'post.dart';
@@ -71,6 +70,11 @@ class Instagram extends StatelessWidget {
               userName: 'suman',
               caption: 'I love flutter renta',
               photo: 'flutter.jpg',
+            ),
+            CustomPost(
+              userName: 'abhash',
+              caption: 'Yup no edits *jk*',
+              photo: 'abhash.jpg',
             ),
           ],
         ),
