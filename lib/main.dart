@@ -3,6 +3,29 @@ import 'package:flutter/material.dart';
 void main() => runApp(CustomWidget());
 
 class CustomWidget extends StatelessWidget {
+  List<String> listOfString = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "d",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o"
+  ];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,7 +34,20 @@ class CustomWidget extends StatelessWidget {
         appBar: AppBar(
           title: Text('List'),
         ),
-        body: DummyProgram(),
+        body: ListView(
+          children: [
+            ListView.builder(
+              //shrinkWrap: true,
+              // physics: BouncingScrollPhysics(),
+              itemCount: listOfString.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(listOfString[index]),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
