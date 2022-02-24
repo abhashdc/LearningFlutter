@@ -11,7 +11,7 @@ class CustomWidget extends StatelessWidget {
         appBar: AppBar(
           title: Text('List'),
         ),
-        body: CustomListView(),
+        body: DummyProgram(),
       ),
     );
   }
