@@ -10,15 +10,16 @@ void main() => runApp(
 class SimpleForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double devideWidth =
-        MediaQuery.of(context).size.width; //Responsive in all devices
+    //Responsive in all devices
+    double devideWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fill up form'),
+        title: Text('Assignment 3'),
       ),
       body: Container(
         color: Colors.white,
         width: devideWidth,
+        //To get uniform look in other devices
         margin: EdgeInsets.all((devideWidth * 2) / 100),
         child: Center(
           child: CustomForm(),
@@ -36,7 +37,7 @@ class CustomForm extends StatefulWidget {
 class _CustomFormState extends State<CustomForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var currentFocus;
-
+  //Function to remove focus of keyboard after submitting
   void unfocus() {
     currentFocus = FocusScope.of(context);
 
@@ -47,13 +48,14 @@ class _CustomFormState extends State<CustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    //I am using listview to manage height for smaller screens. Builder is not needed because we have a fixed quantity of items.
+    //I am using listview to manage height for smaller screens. Builder is not required because we have a fixed quantity of items.
     return Form(
         key: _formKey,
         child: ListView(
           shrinkWrap: true,
           children: [
-            CustomImage(),
+            CustomImage(), //A network image is used.
+            //These are reusuable components
             CustomTextWidget(
               labelTextName: 'First Name',
             ),
@@ -95,6 +97,7 @@ class _CustomFormState extends State<CustomForm> {
                   FocusScope.of(context)
                       .unfocus(); //To dismiss onscreen keyboard after clicking signup
                   if (_formKey.currentState!.validate()) {
+                    //If all the validaiton is passed then show the snackbar
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Form submitted'),
@@ -149,11 +152,13 @@ class CustomTextWidget extends StatelessWidget {
 
     return Container(
       child: TextFormField(
-        keyboardType: TextInputType.name,
-        inputFormatters: digitOrNot,
-        obscureText: isPassword,
+        keyboardType:
+            TextInputType.name, //displays a default alphabetical keyboard
+        inputFormatters:
+            digitOrNot, //To take only digit in phone number field only
+        obscureText: isPassword, //For password field
         maxLines: newMaxLines,
-        minLines: newMinLines,
+        minLines: newMinLines, //For Short description to take more space
         decoration: InputDecoration(
           labelText: labelTextName,
           labelStyle: const TextStyle(
@@ -162,12 +167,13 @@ class CustomTextWidget extends StatelessWidget {
             fontFamily: 'AvenirLight',
           ),
           enabledBorder: const UnderlineInputBorder(
+            //Displays a underline on our input field
             borderSide: BorderSide(
               color: Color(0xFF6200EE),
             ),
           ),
         ),
-        // The validator receives the input that the user has entered.
+        // The validator receives the input that the user has entered and checks if it is empty.
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'This field cannot be empty! Please enter $labelTextName';
@@ -176,6 +182,7 @@ class CustomTextWidget extends StatelessWidget {
           switch (labelTextName) {
             case 'Email':
               {
+                //TO validate if the email is of correct format
                 return RegExp(
                             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(value)
@@ -185,6 +192,7 @@ class CustomTextWidget extends StatelessWidget {
 
             case 'Phone Number':
               {
+                //To validate if the phone number is of 10 digits
                 if (value.length != 10) {
                   return 'Please enter a valid phone number of 10 digits';
                 }
@@ -210,6 +218,7 @@ class CustomTextWidget extends StatelessWidget {
                 return null;
               }
           }
+          //Validator returns null if it passes all the validaiton
           return null;
         },
       ),
@@ -217,12 +226,7 @@ class CustomTextWidget extends StatelessWidget {
   }
 }
 
-enum gender { javatpoint, w3schools, tutorialandexample }
-
 class CustomRadioButton extends StatefulWidget {
-  String gender;
-  CustomRadioButton({this.gender = 'male'});
-
   @override
   State<CustomRadioButton> createState() => _CustomRadioButtonState();
 }
@@ -237,7 +241,8 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
         const Text('Male'),
         Radio(
           value: 1,
-          groupValue: _radioButtonState,
+          groupValue:
+              _radioButtonState, //this is the selected radio button denoted by its value
           onChanged: (val) {
             setState(() {
               _radioButtonState = 1;
@@ -275,7 +280,8 @@ class CustomCheckBox extends StatefulWidget {
 }
 
 class _CustomCheckBoxState extends State<CustomCheckBox> {
-  bool playingGames = true;
+  bool playingGames =
+      true; //Automatically set a few field to checked by keeping it true
   bool workingOut = true;
   bool watchingMovies = false;
   @override
