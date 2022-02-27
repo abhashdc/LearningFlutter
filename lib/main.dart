@@ -1,159 +1,327 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(CreateButton());
+void main() => runApp(
+      MaterialApp(
+        home: SimpleForm(),
+      ),
+    );
 
-class CreateButton extends StatelessWidget {
+class SimpleForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Practice Buttons'),
+    double devideWidth =
+        MediaQuery.of(context).size.width; //Responsive in all devices
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Fill up form'),
+      ),
+      body: Container(
+        color: Colors.white,
+        width: devideWidth,
+        margin: EdgeInsets.all((devideWidth * 2) / 100),
+        child: Center(
+          child: CustomForm(),
         ),
-        body: Column(
-          children: <Widget>[
-            PracticeTextButton(
-              buttonText: 'Simple button',
+      ),
+    );
+  }
+}
+
+class CustomForm extends StatefulWidget {
+  @override
+  _CustomFormState createState() => _CustomFormState();
+}
+
+class _CustomFormState extends State<CustomForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  var currentFocus;
+
+  void unfocus() {
+    currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //I am using listview to manage height for smaller screens. Builder is not needed because we have a fixed quantity of items.
+    return Form(
+        key: _formKey,
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            CustomImage(),
+            CustomTextWidget(
+              labelTextName: 'First Name',
             ),
-            PracticeElevatedButton(
-              buttonText: 'Elevated Button',
+            CustomTextWidget(
+              labelTextName: 'Middle Name',
             ),
-            PracticeFloatingActionButton(),
-            PracticeIconButton(),
-            PracticeOutlinedButton(
-              buttonText: 'Outlined Button',
+            CustomTextWidget(
+              labelTextName: 'Last Name',
             ),
-            PracticeDropdownButton(),
-            PracticePopupMenuButton(),
+            CustomTextWidget(
+              labelTextName: 'Email',
+            ),
+            CustomTextWidget(
+              labelTextName: 'Phone Number',
+              isOnlyNumber: true, //Configuration to enable taking just numbers
+            ),
+            CustomTextWidget(
+              labelTextName: 'Password',
+              isPassword: true, //Configuration to enable password
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Text('Gender'),
+            ),
+            CustomRadioButton(),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Text('Hobbies'),
+            ),
+            CustomCheckBox(),
+            CustomTextWidget(
+              labelTextName: 'Short Description',
+              isShortDescription: true, //Configuration to enable password
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 7),
+              child: ElevatedButton(
+                onPressed: () {
+                  FocusScope.of(context)
+                      .unfocus(); //To dismiss onscreen keyboard after clicking signup
+                  if (_formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Processing Data'),
+                        backgroundColor: Colors.lightGreen,
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Sign Up'),
+              ),
+            ),
+          ],
+        ));
+  }
+}
+
+class CustomImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: CircleAvatar(
+          radius: 99,
+          backgroundImage: NetworkImage(
+              'https://mangathrill.com/wp-content/uploads/2020/04/584d4e5aa50a94b3e370dc185f2107af1280x720.jpg')),
+    );
+  }
+}
+
+class CustomTextWidget extends StatelessWidget {
+  final bool isPassword, isOnlyNumber, isShortDescription;
+  final String labelTextName;
+  int newMinLines = 1;
+  int newMaxLines = 1;
+  List<TextInputFormatter> digitOrNot = [];
+
+  CustomTextWidget({
+    this.isPassword = false,
+    this.labelTextName = 'New Field',
+    this.isOnlyNumber = false,
+    this.isShortDescription = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isOnlyNumber) {
+      digitOrNot = [FilteringTextInputFormatter.digitsOnly];
+    }
+    if (isShortDescription) {
+      newMaxLines = 10;
+      newMinLines = 4;
+    }
+
+    return Container(
+      child: TextFormField(
+        keyboardType: TextInputType.name,
+        inputFormatters: digitOrNot,
+        obscureText: isPassword,
+        maxLines: newMaxLines,
+        minLines: newMinLines,
+        decoration: InputDecoration(
+          labelText: labelTextName,
+          labelStyle: const TextStyle(
+            color: Colors.black87,
+            fontSize: 15,
+            fontFamily: 'AvenirLight',
+          ),
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xFF6200EE),
+            ),
+          ),
+        ),
+        // The validator receives the input that the user has entered.
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'This field cannot be empty! Please enter $labelTextName';
+          }
+
+          switch (labelTextName) {
+            case 'Email':
+              {
+                return RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value)
+                    ? null
+                    : 'Please enter a valid email';
+              }
+
+            case 'Phone Number':
+              {
+                if (value.length != 10) {
+                  return 'Please enter a valid phone number of 10 digits';
+                }
+              }
+              break;
+            case 'Password':
+              {
+                if (value.length <= 6) {
+                  return 'Password length must be more than 6 characters';
+                }
+              }
+              break;
+            case 'Short Description':
+              {
+                List checkWords = value.split(' ');
+                if (checkWords.length > 200) {
+                  return 'Short description became not so short, Please limit yourself at 200 words';
+                }
+              }
+              break;
+            default:
+              {
+                return null;
+              }
+          }
+          return null;
+        },
+      ),
+    );
+  }
+}
+
+enum gender { javatpoint, w3schools, tutorialandexample }
+
+class CustomRadioButton extends StatefulWidget {
+  String gender;
+  CustomRadioButton({this.gender = 'male'});
+
+  @override
+  State<CustomRadioButton> createState() => _CustomRadioButtonState();
+}
+
+class _CustomRadioButtonState extends State<CustomRadioButton> {
+  //By setting a default, radio button will not be empty
+  int _radioButtonState = 1;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        const Text('Male'),
+        Radio(
+          value: 1,
+          groupValue: _radioButtonState,
+          onChanged: (val) {
+            setState(() {
+              _radioButtonState = 1;
+            });
+          },
+        ),
+        const Text('Female'),
+        Radio(
+          value: 2,
+          groupValue: _radioButtonState,
+          onChanged: (val) {
+            setState(() {
+              _radioButtonState = 2;
+            });
+          },
+        ),
+        const Text('Others'),
+        Radio(
+          value: 3,
+          groupValue: _radioButtonState,
+          onChanged: (val) {
+            setState(() {
+              _radioButtonState = 3;
+            });
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class CustomCheckBox extends StatefulWidget {
+  @override
+  _CustomCheckBoxState createState() => _CustomCheckBoxState();
+}
+
+class _CustomCheckBoxState extends State<CustomCheckBox> {
+  bool playingGames = true;
+  bool workingOut = true;
+  bool watchingMovies = false;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text('Playing Games'),
+            Checkbox(
+              value: playingGames,
+              onChanged: (value) {
+                setState(
+                  () {
+                    playingGames = value!;
+                  },
+                );
+              },
+            ),
+            Text('Working Out'),
+            Checkbox(
+              value: workingOut,
+              onChanged: (value) {
+                setState(
+                  () {
+                    workingOut = value!;
+                  },
+                );
+              },
+            ),
           ],
         ),
-        // floatingActionButton: PracticeFloatingActionButton(),
-      ),
+        Row(children: [
+          Text('Watching Movies'),
+          Checkbox(
+            value: watchingMovies,
+            onChanged: (value) {
+              setState(
+                () {
+                  watchingMovies = value!;
+                },
+              );
+            },
+          )
+        ])
+      ],
     );
-  }
-}
-
-class PracticeTextButton extends StatelessWidget {
-  String buttonText;
-  PracticeTextButton({this.buttonText = 'Text Button'});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(
-        style: TextButton.styleFrom(
-          textStyle: const TextStyle(fontSize: 20),
-        ),
-        onPressed: () {},
-        child: Text(buttonText),
-      ),
-    );
-  }
-}
-
-class PracticeDropdownButton extends StatefulWidget {
-  @override
-  State<PracticeDropdownButton> createState() => _PracticeDropdownButtonState();
-}
-
-class _PracticeDropdownButtonState extends State<PracticeDropdownButton> {
-  String dropdownValue = 'One';
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String? newValue) {
-        setState(() {
-          dropdownValue = newValue!;
-        });
-      },
-      items: <String>['One', 'Two', 'Free', 'Four']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    ));
-  }
-}
-
-class PracticeElevatedButton extends StatelessWidget {
-  String buttonText;
-  PracticeElevatedButton({this.buttonText = 'ElevatedButton'});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        onPressed: () {},
-        child: Text(buttonText),
-      ),
-    );
-  }
-}
-
-class PracticeFloatingActionButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        backgroundColor: Colors.red,
-        child: const Icon(Icons.navigation),
-      ),
-    );
-  }
-}
-
-class PracticeIconButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: IconButton(
-        icon: const Icon(Icons.volume_up),
-        onPressed: () {},
-      ),
-    );
-  }
-}
-
-class PracticeOutlinedButton extends StatelessWidget {
-  String buttonText;
-  PracticeOutlinedButton({this.buttonText = 'OutlinedButton'});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: OutlinedButton(
-        onPressed: () {},
-        child: Text(buttonText),
-      ),
-    );
-  }
-}
-
-class PracticePopupMenuButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: PopupMenuButton(
-            itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: Text("First"),
-                    value: 1,
-                  ),
-                  PopupMenuItem(
-                    child: Text("Second"),
-                    value: 2,
-                  )
-                ]));
   }
 }
