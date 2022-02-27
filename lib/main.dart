@@ -97,7 +97,7 @@ class _CustomFormState extends State<CustomForm> {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Processing Data'),
+                        content: Text('Form submitted'),
                         backgroundColor: Colors.lightGreen,
                       ),
                     );
