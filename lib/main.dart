@@ -39,6 +39,19 @@ class MainScreen extends StatelessWidget {
   }
 }
 
+class Item {
+  //Modal class
+  String networkImageUrl, name;
+  int quantity;
+  double price;
+
+  Item(
+      {required this.networkImageUrl,
+      required this.name,
+      required this.quantity,
+      required this.price});
+}
+
 class CustomCard extends StatelessWidget {
   CustomCard({Key? key, required this.item}) : super(key: key);
   Item item;
@@ -61,19 +74,6 @@ class CustomCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class Item {
-  //Modal class
-  String networkImageUrl, name;
-  int quantity;
-  double price;
-
-  Item(
-      {required this.networkImageUrl,
-      required this.name,
-      required this.quantity,
-      required this.price});
 }
 
 class CustomListView extends StatelessWidget {
