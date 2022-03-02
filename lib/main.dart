@@ -37,12 +37,12 @@ class _MainScreenState extends State<MainScreen> {
             },
             indicatorColor: listOfColors[indexOfTab],
             unselectedLabelColor: Colors.red,
-            indicator: UnderlineTabIndicator(
-              borderSide: BorderSide(
-                color: Colors.red,
-              ),
-            ),
-            automaticIndicatorColorAdjustment: false,
+            // indicator: UnderlineTabIndicator(
+            //   borderSide: BorderSide(
+            //     color: Colors.red,
+            //   ),
+            // ),
+            automaticIndicatorColorAdjustment: true,
             indicatorWeight: 5,
             tabs: [
               Tab(
