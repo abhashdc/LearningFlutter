@@ -1,85 +1,85 @@
 import 'package:flutter/material.dart';
-import 'bottom_navigation.dart';
-import 'post.dart';
+import 'Screen/home.dart';
+import 'Screen/search.dart';
+import 'Screen/add.dart';
+import 'Screen/shop.dart';
+import 'Screen/profile.dart';
 
-void main() => runApp(Instagram());
+void main() => runApp(const Instagram());
 
-class Instagram extends StatelessWidget {
+class Instagram extends StatefulWidget {
+  const Instagram({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '  Instagram',
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          flexibleSpace: SafeArea(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    'Instagram',
-                    style: TextStyle(fontSize: 30, fontFamily: 'Billabong'),
-                  ),
+  State<Instagram> createState() => _InstagramState();
+}
+
+class _InstagramState extends State<Instagram> {
+  int currentIndexValue = 0;
+  bool needAppbar = true;
+  final List screen = [
+    //A list of screens to display on tap of navbar
+    const Home(),
+    const Search(), //Added new features
+    const Add(),
+    const Shop(), //Added new features
+    const Profile()
+  ];
+  void onItemTapped(int index) {
+    setState(() {
+      currentIndexValue = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        //Using the arrow because we are returning a single line of code and it looks cleaner
+        title: '  Instagram',
+        home: Scaffold(
+          body: SafeArea(child: screen[currentIndexValue]),
+          bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor:
+                Colors.black, //Pick color of selected navbar item
+            unselectedItemColor:
+                Colors.black45, //set color of selected navbar item
+
+            currentIndex: currentIndexValue,
+            showSelectedLabels: false, //Disable showing labels
+            showUnselectedLabels: false, //Disable showing labels
+            items: const [
+              BottomNavigationBarItem(
+                label: 'Home',
+                icon: Icon(
+                  Icons.home,
                 ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 5),
-                      child: IconButton(
-                        icon: Icon(Icons.favorite_border),
-                        iconSize: 25,
-                        color: Colors.black,
-                        onPressed: () {},
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 20, top: 10),
-                      child: Icon(
-                        Icons.chat_outlined,
-                        color: Colors.black,
-                        size: 25.0,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
+              ),
+              BottomNavigationBarItem(
+                label: 'Search',
+                icon: Icon(
+                  Icons.search,
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: 'Add',
+                icon: Icon(
+                  Icons.add_box_outlined,
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: 'Shop',
+                icon: Icon(
+                  Icons.local_mall_outlined,
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: 'Profile',
+                icon: Icon(
+                  Icons.account_circle,
+                ),
+              )
+            ],
+            onTap: onItemTapped,
           ),
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(8),
-          children: <Widget>[
-            CustomPost(
-              userName: 'rajesh',
-              caption: 'Rajesh Jiraya in Mobile Legends',
-              photo: 'meme.jpg',
-            ),
-            CustomPost(
-              userName: 'abhash',
-              caption: 'Black clover is back!',
-              photo: 'black.jpg',
-            ),
-            CustomPost(
-              userName: 'watchtower',
-              caption: 'Check out this beautiful wallpaper',
-              photo: 'wallpaper.jpg',
-            ),
-            CustomPost(
-              userName: 'suman',
-              caption: 'I love flutter renta',
-              photo: 'flutter.jpg',
-            ),
-            CustomPost(
-              userName: 'abhash',
-              caption: 'Yup no edits *jk*',
-              photo: 'abhash.jpg',
-            ),
-          ],
-        ),
-        bottomNavigationBar: CustomBottomNavigation(),
-      ),
-    );
-  }
+      );
 }

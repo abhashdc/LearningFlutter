@@ -1,50 +1,45 @@
 import 'package:flutter/material.dart';
 
 class CustomPost extends StatelessWidget {
-  String userName, caption, photo;
-  CustomPost(
-      {this.userName = 'abhash',
+  final String userName, caption, photo;
+  const CustomPost(
+      {Key? key,
+      this.userName = 'abhash',
       this.caption = 'THis is caption',
-      this.photo = 'black.jpg'});
+      this.photo = 'black.jpg'})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 450, //Fixed width
       child: Column(
         children: <Widget>[
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                    child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 4),
-                      child: Icon(
-                        Icons.account_circle_rounded,
-                        color: Colors.amber,
-                        size: 26.0,
-                      ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 4),
+                    child: Icon(
+                      Icons.account_circle_rounded,
+                      color: Colors.amber,
+                      size: 26.0,
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 4),
-                      child: Text(userName), //setting username
-                    ),
-                  ],
-                )),
-                Container(
-                  child: PopupMenuButton(
-                    itemBuilder: (context) =>
-                        [PopupMenuItem(child: Text("Option 1"))],
                   ),
-                ),
-              ],
-            ),
+                  Container(
+                    margin: EdgeInsets.only(left: 4),
+                    child: Text(userName), //setting username
+                  ),
+                ],
+              ),
+              PopupMenuButton(
+                itemBuilder: (context) =>
+                    [PopupMenuItem(child: Text("Option 1"))],
+              ),
+            ],
           ),
-          Container(
-            child: Image.asset('assets/images/$photo'),
-          ),
+          Image.asset('assets/images/$photo'),
           Container(
             margin: EdgeInsets.only(top: 5),
             child: Row(
