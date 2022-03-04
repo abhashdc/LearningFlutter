@@ -16,7 +16,7 @@ class Instagram extends StatefulWidget {
 
 class _InstagramState extends State<Instagram> {
   int currentIndexValue = 0;
-  bool needAppbar = true;
+
   final List screen = [
     //A list of screens to display on tap of navbar
     const Home(),
@@ -36,6 +36,7 @@ class _InstagramState extends State<Instagram> {
         //Using the arrow because we are returning a single line of code and it looks cleaner
         title: '  Instagram',
         home: Scaffold(
+          //Safearea to avoid notches and other obstractions
           body: SafeArea(child: screen[currentIndexValue]),
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor:

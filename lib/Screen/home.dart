@@ -19,7 +19,9 @@ class Home extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                   child: const Text(
                     'Instagram',
-                    style: TextStyle(fontSize: 30, fontFamily: 'Billabong'),
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'Billabong'), //Used external fonts
                     textAlign: TextAlign.center,
                   ),
                 ),
