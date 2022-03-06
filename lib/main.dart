@@ -20,9 +20,7 @@ class MyApp extends StatelessWidget {
         drawer: Drawer(
           child: ListView(
             children: [
-              Container(
-                width: double.infinity,
-                height: 200,
+              DrawerHeader(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(
@@ -82,9 +80,7 @@ class MyApp extends StatelessWidget {
         endDrawer: Drawer(
           child: ListView(
             children: [
-              Container(
-                width: double.infinity,
-                height: 200,
+              DrawerHeader(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(
