@@ -1,86 +1,151 @@
 import 'package:flutter/material.dart';
-import 'Screen/home.dart';
-import 'Screen/search.dart';
-import 'Screen/add.dart';
-import 'Screen/shop.dart';
-import 'Screen/profile.dart';
 
-void main() => runApp(const Instagram());
+void main() => runApp(MyApp());
 
-class Instagram extends StatefulWidget {
-  const Instagram({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  //To access the global key programatically
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  State<Instagram> createState() => _InstagramState();
-}
-
-class _InstagramState extends State<Instagram> {
-  int currentIndexValue = 0;
-
-  final List screen = [
-    //A list of screens to display on tap of navbar
-    const Home(),
-    const Search(), //Added new features
-    const Add(),
-    const Shop(), //Added new features
-    const Profile()
-  ];
-  void onItemTapped(int index) {
-    setState(() {
-      currentIndexValue = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-        //Using the arrow because we are returning a single line of code and it looks cleaner
-        title: '  Instagram',
-        home: Scaffold(
-          //Safearea to avoid notches and other obstractions
-          body: SafeArea(child: screen[currentIndexValue]),
-          bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor:
-                Colors.black, //Pick color of selected navbar item
-            unselectedItemColor:
-                Colors.black45, //set color of selected navbar item
-
-            currentIndex: currentIndexValue,
-            showSelectedLabels: false, //Disable showing labels
-            showUnselectedLabels: false, //Disable showing labels
-            items: const [
-              BottomNavigationBarItem(
-                label: 'Home',
-                icon: Icon(
-                  Icons.home,
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        key: scaffoldKey,
+        appBar: AppBar(
+          actions: <Widget>[Container()], //To hide the end drawer
+        ),
+        body: Center(
+          child: const Text('Hi Drawer'),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 200,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        'https://eskipaper.com/images/fairy-tail-wallpaper-15.jpg'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  child: Column(
+                    //To align the items to the left
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      CircleAvatar(
+                        //To create the circle avatar
+                        radius: 40,
+                        foregroundImage: NetworkImage(
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDf28EL35H0RocyAmYCduPGCEOfsyl7ET67g&usqp=CAU'),
+                        backgroundColor: Colors
+                            .white, //If the image is not available then background will be while and text natsu will be displayed
+                        child: Text('Natsu'),
+                      ),
+                      Text(
+                        'Natsu Dragneel',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        'salamander@fairytail.com',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              BottomNavigationBarItem(
-                label: 'Search',
-                icon: Icon(
-                  Icons.search,
-                ),
+              const ListTile(
+                leading: Icon(Icons.money),
+                title: Text("100 Year Quest"),
               ),
-              BottomNavigationBarItem(
-                label: 'Add',
-                icon: Icon(
-                  Icons.add_box_outlined,
-                ),
+              ListTile(
+                selected: true,
+                selectedTileColor: Colors.lime,
+                leading: Icon(Icons.mouse),
+                title: const Text("Click mee"), //opens another drawer
+                onTap: () => scaffoldKey.currentState!.openEndDrawer(),
               ),
-              BottomNavigationBarItem(
-                label: 'Shop',
-                icon: Icon(
-                  Icons.local_mall_outlined,
-                ),
-              ),
-              BottomNavigationBarItem(
-                label: 'Profile',
-                icon: Icon(
-                  Icons.account_circle,
-                ),
-              )
             ],
-            onTap: onItemTapped,
           ),
         ),
-      );
+        endDrawer: Drawer(
+          child: ListView(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 200,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        'https://eskipaper.com/images/fairy-tail-wallpaper-15.jpg'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  child: Column(
+                    //To align the items to the left
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      CircleAvatar(
+                        //To create the circle avatar
+                        radius: 40,
+                        foregroundImage: NetworkImage(
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDf28EL35H0RocyAmYCduPGCEOfsyl7ET67g&usqp=CAU'),
+                        backgroundColor: Colors.white,
+                        // child: const Text('Natsu'),
+                      ),
+                      Text(
+                        'Natsu Dragneel',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        'salamander@fairytail.com',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const ListTile(
+                leading: Icon(
+                  Icons.label_important,
+                  color: Colors.amberAccent,
+                ),
+                title: Text("100 Year Quest"),
+              ),
+              const ListTile(
+                selected: true,
+                selectedTileColor: Colors.redAccent,
+                leading: Icon(
+                  Icons.pan_tool,
+                  color: Colors.black,
+                ),
+                title: Text("The End"),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
