@@ -5,6 +5,16 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	
+	<key>NSMotionUsageDescription</key>
+    <string>For sensors</string>
+	<key>NSContactsUsageDescription</key>
+    <string>For contacts</string>
+	<key>NSLocationUsageDescription</key>
+    <string>For location</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>For microphone</string>
+	<key>NSLocationUsageDescription</key>
+    <string>Example: You should fill this in</string>
 	<key>CFBundleDisplayName</key>
 	<string>Internship</string>
 	<key>CFBundleExecutable</key>

@@ -47,7 +47,7 @@ class Add extends StatelessWidget {
 
   smsPermission() async {
     var smsPermission = await Permission.sms.request();
-    if (Platform.isAndroid) {
+    if (Platform.isIOS) {
       if (smsPermission.isGranted) {
         print('The permission is granted for sms');
       } else if (smsPermission.isDenied || smsPermission.isPermanentlyDenied) {
@@ -57,7 +57,7 @@ class Add extends StatelessWidget {
         print('Contact your parental control head for sms');
       } else if (smsPermission.isLimited) {
         print('It is granted to a certain extent for sms');
-      } else {}
+      }
     } else {
       if (smsPermission.isGranted) {
         print('The permission is granted for sms');
@@ -66,13 +66,23 @@ class Add extends StatelessWidget {
         openAppSettings();
       } else if (smsPermission.isLimited) {
         print('It is granted to a certain extent for sms');
-      } else {}
+      }
     }
   }
 
   locationPermission() async {
+    var locationPermission = await Permission.location.request();
     if (Platform.isAndroid) {
-      var locationPermission = await Permission.location.request();
+      if (locationPermission.isGranted) {
+        print('The permission is granted for location');
+      } else if (locationPermission.isDenied ||
+          locationPermission.isPermanentlyDenied) {
+        print('Its denied so open app setting for location');
+        openAppSettings();
+      } else if (locationPermission.isLimited) {
+        print('It is granted to a certain extent for location');
+      }
+    } else {
       if (locationPermission.isGranted) {
         print('The permission is granted for location');
       } else if (locationPermission.isDenied ||
@@ -83,29 +93,40 @@ class Add extends StatelessWidget {
         print('Contact your parental control head for location');
       } else if (locationPermission.isLimited) {
         print('It is granted to a certain extent for location');
-      } else {}
+      }
     }
   }
 
   sensorPermission() async {
-    if (Platform.isAndroid) {}
     var sensorPermission = await Permission.sensors.request();
-    if (sensorPermission.isGranted) {
-      print('The permission is granted for sensor');
-    } else if (sensorPermission.isDenied ||
-        sensorPermission.isPermanentlyDenied) {
-      print('Its denied so open app setting for sensor');
-      openAppSettings();
-    } else if (sensorPermission.isRestricted) {
-      print('Contact your parental control head for sensor');
-    } else if (sensorPermission.isLimited) {
-      print('It is granted to a certain extent for sensor');
-    } else {}
+    if (Platform.isIOS) {
+      if (sensorPermission.isGranted) {
+        print('The permission is granted for sensor');
+      } else if (sensorPermission.isDenied ||
+          sensorPermission.isPermanentlyDenied) {
+        print('Its denied so open app setting for sensor');
+        openAppSettings();
+      } else if (sensorPermission.isRestricted) {
+        print('Contact your parental control head for sensor');
+      } else if (sensorPermission.isLimited) {
+        print('It is granted to a certain extent for sensor');
+      }
+    } else {
+      if (sensorPermission.isGranted) {
+        print('The permission is granted for sensor');
+      } else if (sensorPermission.isDenied ||
+          sensorPermission.isPermanentlyDenied) {
+        print('Its denied so open app setting for sensor');
+        openAppSettings();
+      } else if (sensorPermission.isLimited) {
+        print('It is granted to a certain extent for sensor');
+      }
+    }
   }
 
   contactPermission() async {
-    if (Platform.isAndroid) {
-      var contactPermission = await Permission.contacts.request();
+    var contactPermission = await Permission.contacts.request();
+    if (Platform.isIOS) {
       if (contactPermission.isGranted) {
         print('The permission is granted for contact');
       } else if (contactPermission.isDenied ||
@@ -116,29 +137,52 @@ class Add extends StatelessWidget {
         print('Contact your parental control head for contact');
       } else if (contactPermission.isLimited) {
         print('It is granted to a certain extent for contact');
-      } else {}
+      }
+    } else {
+      if (contactPermission.isGranted) {
+        print('The permission is granted for contact');
+      } else if (contactPermission.isDenied ||
+          contactPermission.isPermanentlyDenied) {
+        print('Its denied so open app setting for contact');
+        openAppSettings();
+      } else if (contactPermission.isLimited) {
+        print('It is granted to a certain extent for contact');
+      }
     }
   }
 
   phonePermission() async {
-    if (Platform.isAndroid) {}
     var phonePermission = await Permission.phone.request();
-    if (phonePermission.isGranted) {
-      print('The permission is granted for phone call');
-    } else if (phonePermission.isDenied ||
-        phonePermission.isPermanentlyDenied) {
-      print('Its denied so open app setting for  phone call');
-      openAppSettings();
-    } else if (phonePermission.isRestricted) {
-      print('Contact your parental control head for  phone call');
-    } else if (phonePermission.isLimited) {
-      print('It is granted to a certain extent for  phone call');
-    } else {}
+    if (Platform.isIOS) {
+      if (phonePermission.isGranted) {
+        print('The permission is granted for phone call');
+      } else if (phonePermission.isDenied || phonePermission.isPermanentlyDenied) {
+        print('Its denied so open app setting for  phone call');
+        openAppSettings();
+      } else
+       if (phonePermission.isRestricted) {
+        print('Contact your parental control head for  phone call');
+      } 
+      else if (phonePermission.isLimited) {
+        print('It is granted to a certain extent for  phone call');
+      }
+    } else {
+      if (phonePermission.isGranted) {
+        print('The permission is granted for phone call');
+      } else if (phonePermission.isDenied ||
+          phonePermission.isPermanentlyDenied) {
+        print('Its denied so open app setting for  phone call');
+        openAppSettings();
+      } else 
+      if (phonePermission.isLimited) {
+        print('It is granted to a certain extent for  phone call');
+      }
+    }
   }
 
   alertPermission() async {
-    if (Platform.isAndroid) {
-      var alertPermission = await Permission.systemAlertWindow.request();
+    var alertPermission = await Permission.systemAlertWindow.request();
+    if (Platform.isIOS) {
       if (alertPermission.isGranted) {
         print('The permission is granted for system alert');
       } else if (alertPermission.isDenied ||
@@ -149,9 +193,21 @@ class Add extends StatelessWidget {
         print('Contact your parental control head for system alert');
       } else if (alertPermission.isLimited) {
         print('It is granted to a certain extent for system alert');
-      } else {}
+      }
+    } else {
+      if (alertPermission.isGranted) {
+        print('The permission is granted for system alert');
+      } else if (alertPermission.isDenied ||
+          alertPermission.isPermanentlyDenied) {
+        print('Its denied so open app setting for system alert');
+        openAppSettings();
+      } else if (alertPermission.isLimited) {
+        print('It is granted to a certain extent for system alert');
+      }
     }
   }
+
+  //This is just a test function
 
   checkPermission() async {
     final Map<Permission, PermissionStatus> stat = await [
@@ -160,7 +216,7 @@ class Add extends StatelessWidget {
       Permission.sensors, //done
       Permission.contacts, //addressbook for ios
       Permission.phone, //phones
-      Permission.systemAlertWindow, //Microphone for ios
+      Permission.systemAlertWindow, //Alert
     ].request();
   }
 
