@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'Screen/home.dart';
 import 'Screen/search.dart';
 import 'Screen/add.dart';
 import 'Screen/shop.dart';
 import 'Screen/profile.dart';
 
-void main() => runApp(const Instagram());
+void main() => runApp(Instagram());
 
 class Instagram extends StatefulWidget {
-  const Instagram({Key? key}) : super(key: key);
-
   @override
   State<Instagram> createState() => _InstagramState();
 }
