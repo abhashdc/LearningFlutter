@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'notification.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -96,6 +97,7 @@ class _CustomFormState extends State<CustomForm> {
                 onPressed: () {
                   FocusScope.of(context)
                       .unfocus(); //To dismiss onscreen keyboard after clicking signup
+
                   if (_formKey.currentState!.validate()) {
                     //If all the validaiton is passed then show the snackbar
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -104,6 +106,11 @@ class _CustomFormState extends State<CustomForm> {
                         backgroundColor: Colors.lightGreen,
                       ),
                     );
+
+                    // NotificationApi.showNotification(
+                    //   title: 'Form status',
+                    //   body: 'The form has been submitted',
+                    // );
                   }
                 },
                 child: const Text('Sign Up'),
