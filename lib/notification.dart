@@ -2,7 +2,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationVariable =
-      FlutterLocalNotificationsPlugin(); //initializing the object
+      FlutterLocalNotificationsPlugin(); //initializing the objects
 
   Future showNotification() async {
     //Our main class to
