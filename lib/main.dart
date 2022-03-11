@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'notification.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-void main() => runApp(
-      MaterialApp(
-        home: SimpleForm(),
-      ),
-    );
+void main() {
+  NotificationService notificationService = NotificationService();
+  WidgetsFlutterBinding.ensureInitialized();
+  notificationService.init();
+  runApp(
+    MaterialApp(
+      home: SimpleForm(),
+    ),
+  );
+}
 
 class SimpleForm extends StatelessWidget {
   @override
@@ -106,6 +112,9 @@ class _CustomFormState extends State<CustomForm> {
                         backgroundColor: Colors.lightGreen,
                       ),
                     );
+                    NotificationService notificationService =
+                        NotificationService();
+                    notificationService.showNotification();
 
                     // NotificationApi.showNotification(
                     //   title: 'Form status',

@@ -1,43 +1,40 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-// class NotificationApi {
-//   static final notification = FlutterLocalNotificationsPlugin();
+class NotificationService {
+  final FlutterLocalNotificationsPlugin notificationVariable =
+      FlutterLocalNotificationsPlugin(); //initializing the object
 
-//     static Future init({bool initScheduled = false}) async {
-//     final android = AndroidInitializationSettings('@mipmap/ic_launcher');
-//     final ios = IOSInitializationSettings();
-//     final setting = InitializaitonSettings(android:android, iOS: ios);
+  Future showNotification() async {
+    //Our main class to
+    notificationVariable.show(
+        0,
+        "Submitted",
+        "Form successfully Submitted",
+        NotificationDetails(
+          android: androidDetail,
+          iOS: iosDetail,
+        ));
+  }
 
-//     await notification.initialize(
-//       setting,
-//       onSelectNotification: (payload async{})
-//     )
-//   }
+  AndroidNotificationDetails androidDetail =
+      AndroidNotificationDetails('0', 'channelName');
+  IOSNotificationDetails iosDetail = IOSNotificationDetails();
 
+  //SIngleton class
+  static final _notificationService = NotificationService._privateConstructor();
+  NotificationService._privateConstructor();
 
-//   static Future notificationDetails() async {
-//     return NotificationDetails(
-//       android: AndroidNotificationDetails(
-//         'channel id',
-//         'chanel name',
-//         channelDescription: 'channel desc',
-//         importance: Importance.max,
-//       ),
-//     );
-//   }
+  factory NotificationService() {
+    return _notificationService;
+  }
 
-//   static Future showNotification({
-//     int id = 0,
-//     String? title,
-//     String? body,
-//     String payload = 'nah',
-//   }) async {
-//     notification.show(id, title, body, await notificationDetails(),
-//         payload: payload);
-//   }
+  Future init() async {
+    AndroidInitializationSettings androidSetting =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-// }
-
-
-
-
+    IOSInitializationSettings iosSetting = IOSInitializationSettings();
+    InitializationSettings initSetting =
+        InitializationSettings(android: androidSetting, iOS: iosSetting);
+    await notificationVariable.initialize(initSetting);
+  }
+}
